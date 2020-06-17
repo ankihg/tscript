@@ -7,7 +7,7 @@
 - In javscript variables have types (number, string, array, boolean)
 - And with **dynamic typing**, you don't have to say what they are
 - Javascript will take what it's given and figure it out
-- For example, this `subtract` function will take whatever its given and do what it can with it
+- For example this `subtract` function
 ```
 function subtract(a, b) {
     return a - b;
@@ -17,15 +17,15 @@ subtract('happy', 'cat'); // Returns NaN
 subtract(['orange', 'apple'], ['banana']); // Returns NaN
 ```
 - But this function only makes sense to call on numbers
-- Anything else will likely causes problems (Who wants `NaNs`?!)
+- Anything else will likely causes problems
 - This is where **static typing** is very useful
 - With Typescript, we can say that this function should only be called with numbers
 ```
-function subtract(a: number, b: number):number {
+function subtract(a: number, b: number): number {
     return a - b;
 }
 ```
-- Now when we call with numbers and compile our typescript everything works great. It transforms to javascript successfully and when called returns `2`
+- So we can call it with numbers like we should
 ```
 subtract(5, 3); // Returns 2
 ```
