@@ -144,11 +144,11 @@ namespace CheatSheet {
 
     // UNION TYPES
     // Allows you to say that a variable can be a list of different types
-    function add(a: string | number, b: string | number): string | number {
-        return a + b;
+    function log(a: string | number): void {
+        console.log(a);
     }
-    console.log(add('abc', 'def'));
-    console.log(add(1, 2));
+    log('abc');
+    log(1);
     // Error: Argument of type 'true' is not assignable to parameter of type 'string | number'
-    // console.log(add(true, false));
+    // log(true);
 }
