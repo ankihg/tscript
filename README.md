@@ -150,7 +150,7 @@ preferFirst('gold', 4); // Errors on compile
 ```
 
 ## Type assertions
-Allows you to tell the compiler that this variable is a different type than it is currently thinks it is
+Allows you to tell the compiler that this variable is a different type than it currently thinks it is
 
 ## Interfaces
 You can make your own types by defining Interfaces
