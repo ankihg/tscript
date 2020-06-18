@@ -8,7 +8,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "tsc && node dist/cheatsheet.js",
+    "start": "tsc && node dist/workbook.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
