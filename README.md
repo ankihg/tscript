@@ -1,6 +1,6 @@
-## How is typescript different from javascript?
-- Supports all features of javascript
-- Typescript adds features onto javascript
+## What is typescript?
+- Gets transformed into javascript before runtime
+- Supports all features of javascript and more ("superset" of javascript)
 - **Adds static typing to javascript**
 
 ## Static vs dynamic typing
@@ -40,6 +40,48 @@ index.ts:15:10 - error TS2345: Argument of type '"happy"' is not assignable to p
 ```
 - This lets you catch your mistakes early and removes the hazard of this happening at runtime and causing an error for the user
 
+## How does typescript work with javascript?
+Don't need to focus too hard on these details as it will likely already be setup in your codebases
+- It gets transformed into javascript before runtime
+- Transformed typescript will be put in the folder defined as `outDir` in `tsconfig.json`
+```
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist"
+  },
+  "lib": ["es2015"]
+}
+```
+- Running the `tsc` in command line will compile typescript files and transform them javascript then put the result in `outDir`
+
+![Dist dir](./resources/dist-dir.png)
+- These files in `dist/` is what will be run
+
+## Ways to declare types
+When defining a variable
+```
+let isDone: boolean = false;
+```
+
+When defining a function you can specify the type of parameters and return value
+```
+function strLength(a: string):number {
+  return a.length;
+}
+```
+
+Use `void` as the return value if the function doesn't return anything
+```
+function log(val: string): void {
+    console.log(string);
+}
+```
+
 ## Types of Typescript
 ##### boolean
 ```
@@ -60,7 +102,18 @@ let inputValue: string = 'i love butterflies';
 ```
 Ex `'abc'`, `'cows in berkeley ?!'`, `''`
 
-##### any
+##### array
+Must specify the type of the values when defining an array
+```
+let nums: number[] = [1, 2, 3, 5];
+let words: string[] = ['i', 'love', 'butterflies'];
+```
+Can use type `any` when the array contains a mixture of types
+```
+let values: any[] = ['cats', 4, true];
+```
+
+## any
 Type `any` is like a wildcard type that will pass through any compile checks
 
 Using type `any` is like being in Javascriptland
@@ -73,17 +126,6 @@ x = 5;
 
 - It's useful when working with existing Javascript code that do not specify type.
 - Can be useful when defining an array that will have values of different types
-
-##### array
-Must specify the type of the values when defining an array
-```
-let nums: number[] = [1, 2, 3, 5];
-let words: string[] = ['i', 'love', 'butterflies'];
-```
-Can use type `any` when the array contains a mixture of types
-```
-let values: any[] = ['cats', 4, true];
-```
 
 ## Generic Types
 Generic types are a way to define the type relationship between parameters or return values without knowing exactly what type they will be.
@@ -107,44 +149,30 @@ But if you try to call it with one string and one number the compiler will error
 preferFirst('gold', 4); // Errors on compile
 ```
 
-## Ways to declare types
-When defining a variable
-```
-let isDone: boolean = false;
-```
-
-When defining a function you can specify the type of parameters and return value
-```
-function strLength(a: string):number {
-  return a.length;
-}
-```
-
-
 ## Type assertions
 Allows you to tell the compiler that this variable is a different type than it is currently thinks it is
 
-
-## How does typescript work with javascript?
-Don't need to focus too hard on these details as it will likely already be setup in your codebases
-- It gets transformed into javascript before runtime
-- Transformed typescript will be put in the folder defined as `outDir` in `tsconfig.json`
+## Interfaces
+You can make your own types by defining Interfaces
 ```
-{
-  "compilerOptions": {
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "target": "es6",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "dist"
-  },
-  "lib": ["es2015"]
+interface Cat {
+    age: number,
+    isHungry: boolean,
+    name?: string, // use ? for optional properties
 }
 ```
-- Running the `tsc` in command line will compile typescript files into javascript and put the result in `outDir`
+These can be used like any other type
+```
+let puss: Cat = {age: 10, isHungry: true};
 
-![Dist dir](./resources/dist-dir.png)
-- These files in `dist/` is what will be run
+function askForFoodIfHungry(cat: Cat): void {
+    if (cat.isHungry) console.log('meowwwww');
+}
+
+interface Household {
+    numResidents: number,
+    cat: Cat,
+}
+```
 
 ## Resources
