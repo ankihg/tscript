@@ -47,7 +47,7 @@ function preferFirst<T>(a: T, b: T): T {
     return a || b;
 }
 
-// Can call with two numbers, returning a numbers
+// Can call with two numbers, returning a number
 console.log(preferFirst(1, 3)); // Returns 1
 console.log(preferFirst(0, 3)); // Returns 3
 
@@ -57,14 +57,6 @@ console.log(preferFirst('', 'cat')); // Returns 'cat'
 // Cannot call with one argument a string and the other a number
 // Error on compile: Argument of type '5' is not assignable to parameter of type '"happy"'
 // console.log(preferFirst('happy', 5));
-
-// Cannot perform operations that assume a certain type
-// You must treat these variables defined as type T generically
-// For example, you cannot add the two variables together because that's assuming that they are a type that supports the + operator
-// Error on compile: Operator '+' cannot be applied to types 'T' and 'T'
-// function add<T>(a: T, b: T): T {
-//     return a + b;
-// }
 
 // Example with an array
 function getFirst<T>(arr: T[]): T {
@@ -83,12 +75,27 @@ console.log(matchConditions('yay', 'nay', true, false));
 // Error on compile: Argument of type 'true' is not assignable to parameter of type 'string'
 // console.log(matchConditions('yay', true, 'nay', false));
 
+// Cannot perform operations that assume a certain type
+// You must treat these variables defined as type T generically
+// For example, you cannot call .length on the parameter because you are assuming the type it will be called with supports that
+// Error on compile: Property 'length' does not exist on type 'T'
+// function logLength<T>(a: T): T {
+//     let length = a.length;
+//     console.log(length);
+//     return a;
+// }
+
 // TYPE ASSERTIONS
-// let x: any = 5;
-// // Currently the compiler understands that x is any kind of variable
-// // And if we try to call our subtract fn with x the compiler will error since the subtract fn is expecting a number
-// console.log(subtract(x, x));
-// // Will error on compile
-// // So we will need the compiler to understand that this is a number
-// // Since we the developer know that it is, we can assert the type like this `<number> x`
-// subtract(<number> x, <number> x);
+// Currently the compiliers understanding of the parameter `a` is that it could be any type of variable
+// So we cannot take advantage of type-specific features like `+` or `.length`
+// But if we know that the variable will actually be a more specific type (such as a string)
+// We can assert that the varable is this specific type to gain type-specific behavior
+function logLength<T>(a: T): T {
+    // Make a new variable called `aStr` that has the value of `a` but is recognized by the compiler as a string
+    let aStr: string = a as unknown as string;
+    // Below is an alternate notation but is discourage because it can be ambiguous with React's JSX notation
+    // let aStr: string = <string><unknown> a;
+    console.log(aStr.length);
+    return a;
+}
+logLength('abc');

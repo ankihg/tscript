@@ -88,7 +88,7 @@ let values: any[] = ['cats', 4, true];
 ## Generic Types
 Generic types are a way to define the type relationship between parameters or return values without knowing exactly what type they will be.
 
-This function `join` will take two arguments of the same type (which we are notating as T) and return a value of that same type
+This function `preferFirst` will take two arguments of the same type (which we are notating as T) and return a value of that same type
 ```
 function preferFirst<T>(a: T, b: T): T {
     return a || b;
